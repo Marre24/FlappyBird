@@ -11,16 +11,30 @@ namespace FlappyBird
         public List<PipePair> Pipes { get => activePipes; }
 
         private readonly List<PipePair> activePipes = new List<PipePair>();
-        private readonly Game1 game1;
-        private float pipeSpawningSpeed = 6f;
+        private readonly FlappyBirdGame game;
+        private float pipeSpawningSpeed = 5.0f;
         private double timeSinceUpdate = -12;
+        private const int speedUpPipe = 2;
+        private readonly SpriteFont markerFelt;
 
-        public PipeManager(Game1 game1)
+        public PipeManager(FlappyBirdGame game)
         {
-            this.game1 = game1;
+            this.game = game;
+
+            markerFelt = game.Content.Load<SpriteFont>("Fonts/MarkerFelt-22");
         }
 
+        public void Restart()
+        {
+            activePipes.Clear();
+            pipeSpawningSpeed = 6f;
+            timeSinceUpdate = -12;
+        }
+
+
         public void AddPipe(PipePair pipe) { activePipes.Add(pipe); }
+
+        private int i = 0;
 
         public void Update(GameTime gameTime)
         {
@@ -31,16 +45,22 @@ namespace FlappyBird
             if (gameTime.TotalGameTime.TotalSeconds >= pipeSpawningSpeed + timeSinceUpdate)
             {
                 timeSinceUpdate = gameTime.TotalGameTime.TotalSeconds;
+                if (speedUpPipe <= i && pipeSpawningSpeed >= 1.4f)
+                {
+                    pipeSpawningSpeed -= 0.2f;
+                    i = 0;
+                }
+                else
+                    i++;
 
-                if (pipeSpawningSpeed >= 0.5f)
-                    pipeSpawningSpeed -= 0.4f;
-
-                AddPipe(new PipePair(game1));
+                AddPipe(new PipePair(game));
             }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            spriteBatch.DrawString(markerFelt, pipeSpawningSpeed.ToString(), Vector2.Zero, Color.White);
+
             foreach (PipePair pipe in activePipes)
                 if (!pipe.IsOutSideOfScreen())
                     pipe.Draw(spriteBatch);

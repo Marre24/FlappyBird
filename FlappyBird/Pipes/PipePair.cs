@@ -26,12 +26,11 @@ namespace FlappyBird
         private Rectangle underpipeHead;
         readonly Random random = new Random();
 
-        public PipePair(Game1 game) : base(game)
+        public PipePair(FlappyBirdGame game) : base(game)
         {
             overpipeHeadTexture = game.Content.Load<Texture2D>("Pics/OverPipeHead");
             underpipeHeadTexture = game.Content.Load<Texture2D>("Pics/UnderPipeHead");
             pipeShaft = game.Content.Load<Texture2D>("Pics/PipeShaft");
-
 
             overpipeHeight = random.Next(15 * scale, game.GraphicsDevice.DisplayMode.Height - distanceBetweenPipes - 100);
             overpipeLocation = new Vector2(game.GraphicsDevice.DisplayMode.Width, 0);
@@ -71,14 +70,13 @@ namespace FlappyBird
         {
             bool insideOfOverPipe = ((overpipeHead.Left <= playerHitbox.Right && playerHitbox.Right <= overpipeHead.Right) ||
                 (overpipeHead.Left <= playerHitbox.Left && playerHitbox.Left <= overpipeHead.Right))
-                && (int.MinValue <= playerHitbox.Bottom && playerHitbox.Bottom <= overpipeHead.Bottom);
+                && (int.MinValue <= playerHitbox.Top && playerHitbox.Top <= overpipeHead.Bottom);
 
             bool insideOfUnderPipe = ((overpipeHead.Left <= playerHitbox.Right && playerHitbox.Right <= overpipeHead.Right) ||
                 (overpipeHead.Left <= playerHitbox.Left && playerHitbox.Left <= overpipeHead.Right))
                 && (underpipeHead.Top <= playerHitbox.Bottom && playerHitbox.Bottom <= underpipeShaft.Bottom);
 
             return insideOfOverPipe || insideOfUnderPipe;
-
         }
     }
 }

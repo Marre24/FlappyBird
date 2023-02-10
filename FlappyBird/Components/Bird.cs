@@ -17,14 +17,14 @@ namespace FlappyBird
     public class Bird : Component
     {
         public float XCord { get => location.X;}
-        public float YCord { get => location.Y; private set => location.Y = value; }
+        public float YCord { get => location.Y; set => location.Y = value; }
 
         private Vector2 location;
         private readonly Point size = new Point(width, height);
         private const int width = 150;
         private const int height = 100;
 
-        private readonly Texture2D texture2D;
+        private readonly Texture2D peterNormal;
 
         private const float maxSpeed = 10f;
         private const float jumpForce = 17f;
@@ -32,18 +32,18 @@ namespace FlappyBird
 
         public BirdState activeState = BirdState.Flying;
 
-        public Bird(Game1 game) : base(game)
+        public Bird(FlappyBirdGame game) : base(game)
         {
             location.X = (game.GraphicsDevice.DisplayMode.Width / 4) - width / 2;
             YCord = (game.GraphicsDevice.DisplayMode.Height / 2) - height / 2;
 
-            texture2D = game.Content.Load<Texture2D>("Pics/test");
+            peterNormal = game.Content.Load<Texture2D>("Pics/PeterBirdNormal");
         }
 
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture2D, new Rectangle(location.ToPoint(), size), Color.White);
+            spriteBatch.Draw(peterNormal, new Rectangle(location.ToPoint(), size), Color.White);
         }
 
         private bool spaceWasUp = false;
@@ -81,7 +81,6 @@ namespace FlappyBird
                 activeState = BirdState.Dead;
                 return;
             }
-
 
             foreach (PipePair pipe in game.pipeManager.Pipes)
                 if (pipe.IsInsidePipe(new Rectangle(location.ToPoint() + new Point(0, (int)speed), size)))

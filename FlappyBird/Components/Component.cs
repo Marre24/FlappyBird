@@ -8,8 +8,8 @@ namespace FlappyBird
 {
     public class Component
     {
-        protected readonly Game1 game;
-        public Component(Game1 game)
+        protected readonly FlappyBirdGame game;
+        public Component(FlappyBirdGame game)
         {
             this.game = game;
         }
