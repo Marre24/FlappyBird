@@ -2,12 +2,16 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
+using System.Windows.Forms;
 
 namespace FlappyBird
 {
     public class PipePair : Component
     {
+        private readonly Bottle bottle;
+
         private readonly Vector2 overpipeLocation;
         private const int headWidth = 32;
         private const int pipeWidth = 28;
@@ -41,10 +45,15 @@ namespace FlappyBird
             underpipeHead = new Rectangle((int)overpipeLocation.X, overpipeHead.Bottom + distanceBetweenPipes, headWidth * scale, 15 * scale);
             underpipeShaft = new Rectangle((int)overpipeLocation.X + 2 * scale, overpipeHeight + distanceBetweenPipes + 15 * scale,
                 pipeWidth * scale, game.GraphicsDevice.DisplayMode.Height - (overpipeHeight + distanceBetweenPipes + 15 * scale));
+
+            bottle = new Bottle(game, overpipeHead.Location + new Point(underpipeHead.Width / 2, 125));
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            if (!bottle.collected)
+                bottle.Draw(spriteBatch);
+
             spriteBatch.Draw(overpipeHeadTexture, overpipeHead, Color.White);
             spriteBatch.Draw(pipeShaft, overpipeShaft, Color.White);
             spriteBatch.Draw(underpipeHeadTexture, underpipeHead, Color.White);
@@ -53,6 +62,10 @@ namespace FlappyBird
 
         public override void Update(GameTime gameTime)
         {
+            if (!bottle.collected)
+                bottle.UpdatePosition(pipeSpeed);
+            bottle.CheckCollision(game.bird);
+
             overpipeShaft.Location -= new Point(pipeSpeed, 0);
             overpipeHead.Location -= new Point(pipeSpeed, 0);
             underpipeHead.Location -= new Point(pipeSpeed, 0);

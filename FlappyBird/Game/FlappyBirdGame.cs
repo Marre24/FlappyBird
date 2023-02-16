@@ -34,6 +34,7 @@ namespace FlappyBird
             startScreen = new StartScreen();
             deathScreen = new DeathScreen(this);
             flyScreen = new FlyScreen();
+            new SoundManager(this);
             graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
             graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
             IsMouseVisible = true;

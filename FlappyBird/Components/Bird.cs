@@ -21,8 +21,8 @@ namespace FlappyBird
 
         private Vector2 location;
         private readonly Point size = new Point(width, height);
-        private const int width = 150;
-        private const int height = 100;
+        public const int width = 150;
+        public const int height = 100;
 
         private readonly Texture2D peterNormal;
 
