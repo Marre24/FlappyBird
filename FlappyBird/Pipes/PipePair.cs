@@ -16,7 +16,7 @@ namespace FlappyBird
         private const int headWidth = 32;
         private const int pipeWidth = 28;
         private readonly int overpipeHeight;
-        private const int distanceBetweenPipes = 500;
+        private const int distanceBetweenPipes = 280;
         private const int scale = 4;
 
         private readonly Texture2D overpipeHeadTexture;     // 32 x 15
@@ -29,6 +29,8 @@ namespace FlappyBird
         private Rectangle underpipeShaft;
         private Rectangle underpipeHead;
         readonly Random random = new Random();
+
+        public Bottle Bottle { get => bottle; }
 
         public PipePair(FlappyBirdGame game) : base(game)
         {
@@ -64,7 +66,6 @@ namespace FlappyBird
         {
             if (!bottle.collected)
                 bottle.UpdatePosition(pipeSpeed);
-            bottle.CheckCollision(game.bird);
 
             overpipeShaft.Location -= new Point(pipeSpeed, 0);
             overpipeHead.Location -= new Point(pipeSpeed, 0);
@@ -81,15 +82,8 @@ namespace FlappyBird
 
         public bool IsInsidePipe(Rectangle playerHitbox)
         {
-            bool insideOfOverPipe = ((overpipeHead.Left <= playerHitbox.Right && playerHitbox.Right <= overpipeHead.Right) ||
-                (overpipeHead.Left <= playerHitbox.Left && playerHitbox.Left <= overpipeHead.Right))
-                && (int.MinValue <= playerHitbox.Top && playerHitbox.Top <= overpipeHead.Bottom);
-
-            bool insideOfUnderPipe = ((overpipeHead.Left <= playerHitbox.Right && playerHitbox.Right <= overpipeHead.Right) ||
-                (overpipeHead.Left <= playerHitbox.Left && playerHitbox.Left <= overpipeHead.Right))
-                && (underpipeHead.Top <= playerHitbox.Bottom && playerHitbox.Bottom <= underpipeShaft.Bottom);
-
-            return insideOfOverPipe || insideOfUnderPipe;
+            return playerHitbox.Intersects(overpipeHead) || playerHitbox.Intersects(overpipeShaft) || 
+                playerHitbox.Intersects(underpipeHead) || playerHitbox.Intersects(underpipeShaft);
         }
     }
 }

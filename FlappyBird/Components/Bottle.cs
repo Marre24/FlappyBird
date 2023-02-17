@@ -35,6 +35,7 @@ namespace FlappyBird
         {
             if (new Rectangle(location, new Point(beerBotleSize.X * scale, beerBotleSize.Y * scale)).Intersects(new Rectangle((int)bird.XCord, (int)bird.YCord, Bird.width, Bird.height)))
                 collected = true;
+            bird.DrinkBeer();
         }
 
 
