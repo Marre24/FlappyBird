@@ -15,18 +15,17 @@ namespace FlappyBird
         private float pipeSpawningSpeed = 5.0f;
         private double timeSinceUpdate = -12;
         private const int speedUpPipe = 2;
-        private readonly SpriteFont markerFelt;
 
         public PipeManager(FlappyBirdGame game)
         {
             this.game = game;
 
-            markerFelt = game.Content.Load<SpriteFont>("Fonts/MarkerFelt-22");
         }
 
         public void Restart()
         {
             activePipes.Clear();
+            game.bird.ResetPoints();
             pipeSpawningSpeed = 6f;
             timeSinceUpdate = -12;
         }
@@ -59,7 +58,6 @@ namespace FlappyBird
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(markerFelt, pipeSpawningSpeed.ToString(), Vector2.Zero, Color.White);
 
             foreach (PipePair pipe in activePipes)
                 if (!pipe.IsOutSideOfScreen())

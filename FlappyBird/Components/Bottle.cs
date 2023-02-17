@@ -31,11 +31,14 @@ namespace FlappyBird
             location -= new Point(xIncrement, 0);
         }
 
-        public void CheckCollision(Bird bird)
+        public void CheckCollision(Bird bird, GameTime gameTime)
         {
             if (new Rectangle(location, new Point(beerBotleSize.X * scale, beerBotleSize.Y * scale)).Intersects(new Rectangle((int)bird.XCord, (int)bird.YCord, Bird.width, Bird.height)))
+            {
                 collected = true;
-            bird.DrinkBeer();
+                location = Point.Zero;
+                bird.DrinkBeer(gameTime);
+            }
         }
 
 

@@ -10,7 +10,6 @@ namespace FlappyBird
     public class FlappyBirdGame : Game
     {
         private readonly GraphicsDeviceManager graphics;
-        private SpriteFont markerFelt;
         private SpriteBatch spriteBatch;
         public Bird bird;
         public PipeManager pipeManager;
@@ -39,7 +38,6 @@ namespace FlappyBird
             graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
             IsMouseVisible = true;
             graphics.ApplyChanges();
-            markerFelt = Content.Load<SpriteFont>("Fonts/MarkerFelt-22");
         }
 
         protected override void LoadContent()
@@ -73,8 +71,6 @@ namespace FlappyBird
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
-
-            spriteBatch.DrawString(markerFelt, (1.0 / gameTime.ElapsedGameTime.TotalSeconds).ToString(), new Vector2(GraphicsDevice.DisplayMode.Width - 100, 0), Color.White);
 
             switch (bird.activeState)
             {

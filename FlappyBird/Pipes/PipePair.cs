@@ -16,7 +16,7 @@ namespace FlappyBird
         private const int headWidth = 32;
         private const int pipeWidth = 28;
         private readonly int overpipeHeight;
-        private const int distanceBetweenPipes = 280;
+        private const int distanceBetweenPipes = 285;
         private const int scale = 4;
 
         private readonly Texture2D overpipeHeadTexture;     // 32 x 15
@@ -48,7 +48,7 @@ namespace FlappyBird
             underpipeShaft = new Rectangle((int)overpipeLocation.X + 2 * scale, overpipeHeight + distanceBetweenPipes + 15 * scale,
                 pipeWidth * scale, game.GraphicsDevice.DisplayMode.Height - (overpipeHeight + distanceBetweenPipes + 15 * scale));
 
-            bottle = new Bottle(game, overpipeHead.Location + new Point(underpipeHead.Width / 2, 125));
+            bottle = new Bottle(game, overpipeHead.Location + new Point(underpipeHead.Width / 2, 150));
         }
 
         public override void Draw(SpriteBatch spriteBatch)

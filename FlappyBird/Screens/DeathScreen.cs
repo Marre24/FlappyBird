@@ -9,7 +9,7 @@ namespace FlappyBird
 {
     class DeathScreen : Screen
     {
-        private const string deathMessage = "Du dog :(";
+        private const string deathMessage = "Du dog, du fick: ";
         private readonly Point spaceSize = new Point(96, 32);
         private const int scale = 4;
         private readonly Point location;
@@ -37,7 +37,7 @@ namespace FlappyBird
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(MarkerFelt, deathMessage, new Vector2(game.GraphicsDevice.DisplayMode.Width / 2 - 50, game.GraphicsDevice.DisplayMode.Height / 2 - 200), Color.White);
+            spriteBatch.DrawString(MarkerFelt, deathMessage + game.bird.Points + " poäng", new Vector2(game.GraphicsDevice.DisplayMode.Width / 2 - 200, game.GraphicsDevice.DisplayMode.Height / 2 - 200), Color.White);
             if (buttonIsUp)
                 spriteBatch.Draw(buttonUpTexture, buttonHitBox, Color.White);
             else
