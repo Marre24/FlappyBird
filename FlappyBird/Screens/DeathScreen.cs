@@ -43,9 +43,14 @@ namespace FlappyBird
             else
                 spriteBatch.Draw(buttonDownTexture, buttonHitBox, Color.White);
         }
+        double time = 0;
+        const double interval = 2;
 
         public override void Update(GameTime gameTime)
         {
+            if (time + interval >= gameTime.TotalGameTime.TotalSeconds)
+                return;
+            time = gameTime.TotalGameTime.TotalSeconds;
             var mouseState = Mouse.GetState();
 
             if (!buttonHitBox.Contains(mouseState.Position))

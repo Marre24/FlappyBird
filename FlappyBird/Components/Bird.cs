@@ -38,7 +38,7 @@ namespace FlappyBird
         private float speed = 0;
         private int points = 0;
 
-        public BirdState activeState = BirdState.Flying;
+        public BirdState activeState = BirdState.WaitingForStart;
 
         public Bird(FlappyBirdGame game) : base(game)
         {
@@ -111,7 +111,7 @@ namespace FlappyBird
             YCord += speed;
         }
 
-        private void Jump()
+        public void Jump()
         {
             speed = -jumpForce;
             spaceWasUp = false;

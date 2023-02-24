@@ -30,7 +30,7 @@ namespace FlappyBird
             bird = new Bird(this);
             pipeManager = new PipeManager(this);
             gameManager = new GameManager(this);
-            startScreen = new StartScreen();
+            startScreen = new StartScreen(this);
             deathScreen = new DeathScreen(this);
             flyScreen = new FlyScreen();
             new SoundManager(this);
@@ -75,7 +75,7 @@ namespace FlappyBird
             switch (bird.activeState)
             {
                 case BirdState.WaitingForStart:
-                    startScreen.Update(gameTime);
+                    startScreen.Draw(spriteBatch);
                     break;
                 case BirdState.Flying:
                     flyScreen.Draw(spriteBatch);

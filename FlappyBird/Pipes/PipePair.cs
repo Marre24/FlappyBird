@@ -39,10 +39,10 @@ namespace FlappyBird
             pipeShaft = game.Content.Load<Texture2D>("Pics/PipeShaft");
 
             overpipeHeight = random.Next(15 * scale, game.GraphicsDevice.DisplayMode.Height - distanceBetweenPipes - 100);
-            overpipeLocation = new Vector2(game.GraphicsDevice.DisplayMode.Width, 0);
+            overpipeLocation = new Vector2(game.GraphicsDevice.DisplayMode.Width + 400, 0);
 
             overpipeHead = new Rectangle((int)overpipeLocation.X, overpipeHeight - 15 * scale, headWidth * scale, 15 * scale);
-            overpipeShaft = new Rectangle((int)overpipeLocation.X + 2 * scale, 0, pipeWidth * scale, overpipeHeight - 15 * scale);
+            overpipeShaft = new Rectangle((int)overpipeLocation.X + (2 * scale), 0, pipeWidth * scale, overpipeHeight - (15 * scale));
 
             underpipeHead = new Rectangle((int)overpipeLocation.X, overpipeHead.Bottom + distanceBetweenPipes, headWidth * scale, 15 * scale);
             underpipeShaft = new Rectangle((int)overpipeLocation.X + 2 * scale, overpipeHeight + distanceBetweenPipes + 15 * scale,
@@ -83,7 +83,12 @@ namespace FlappyBird
         public bool IsInsidePipe(Rectangle playerHitbox)
         {
             return playerHitbox.Intersects(overpipeHead) || playerHitbox.Intersects(overpipeShaft) || 
-                playerHitbox.Intersects(underpipeHead) || playerHitbox.Intersects(underpipeShaft);
+                playerHitbox.Intersects(underpipeHead) || playerHitbox.Intersects(underpipeShaft) || AreInCelingWhenPipeHits();
+        }
+
+        private bool AreInCelingWhenPipeHits()
+        {
+            return game.bird.YCord + Bird.height <= 0 && (overpipeHead.Location.X <= game.bird.XCord + Bird.width && game.bird.XCord + Bird.width <= overpipeHead.Location.X + overpipeHead.Width);
         }
     }
 }
